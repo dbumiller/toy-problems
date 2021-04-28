@@ -3,11 +3,14 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function(nums) {
-  for (var i = 0; i < nums.length; i++) {
-      if (i !== nums.length - 1 && nums[i] === 0) {
-          nums.splice(i, 2, nums[i + 1]);
-          nums.push(0);
-      }
-  }
-  return;
+  var moved = 0;
+    for (var i = 0; i < nums.length; i++) {
+        if (nums[i] === 0 && i + moved < nums.length - 1) {
+            nums.splice(i, 1);
+            nums.push(0);
+            i--;
+            moved++;
+        }
+    }
+    return;
 };

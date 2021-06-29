@@ -3,23 +3,23 @@
  * @return {number}
  */
 var pivotIndex = function(nums) {
-  var leftSum;
+  var leftSum = 0;
   var rightSum;
+
+  var sum = 0;
   for (var i = 0; i < nums.length; i++) {
-      leftSum = 0;
-      for (var j = 0; j < i; j++) {
-          leftSum += nums[j];
-      }
+      sum += nums[i];
+  }
 
-      rightSum = 0;
-      for (var j = i + 1; j < nums.length; j++) {
-          rightSum += nums[j];
+  rightSum = sum;
+  for (var i = 0; i < nums.length; i++) {
+      rightSum -= nums[i];
+      if (i > 0) {
+          leftSum += nums[i - 1];
       }
-
       if (leftSum === rightSum) {
           return i;
       }
   }
-
   return -1;
 };

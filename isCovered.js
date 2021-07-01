@@ -5,38 +5,35 @@
  * @return {boolean}
  */
 var isCovered = function(ranges, left, right) {
-  //loop through ranges
-    //set left for current range
-    //set right for current range
-    //loop through remaining ranges
-      //if ranges dont connect, break
-      //else, set right for current range and increment original loop
-    //check if left/right fits in current range
-    //if yes, return true
-
-  //return false
-
-  var rangeLeft;
-  var rangeRight;
+  var combined = [];
+  var extended;
 
   for (var i = 0; i < ranges.length; i++) {
-      rangeLeft = ranges[i][0];
-      rangeRight = ranges[i][1];
-
-      for (var j = i + 1; j < ranges.length; j++) {
-          if (ranges[j][0] <= rangeRight + 1) {
-              if (ranges[j][1] > rangeRight) {
-                  rangeRight = ranges[j][1];
+      extended = false;
+      for (var j = 0; j < combined.length; j++) {
+          if (ranges[i][1] > combined[j][1]) {
+              if (ranges[i][0] <= combined[j][1] + 1) {
+                  if (ranges[i][0] < combined[j][0]) {
+                      combined[j][0] = ranges[i][0];
+                  }
+                  combined[j][1] = ranges[i][1];
+                  extended = true;
               }
-          } else {
-              break;
+          } else if (ranges[i][0] < combined[j][0]) {
+              if (ranges[i][1] >= combined[j][0] - 1) {
+                  combined[j][0] = ranges[i][0];
+              }
           }
       }
-
-      if (left >= rangeLeft && right <= rangeRight) {
-          return true;
+      if (!extended) {
+          combined.push(ranges[i]);
       }
   }
 
+  for (var i = 0; i < combined.length; i++) {
+      if (left >= combined[i][0] && right <= combined[i][1]) {
+          return true;
+      }
+  }
   return false;
-};
+}

@@ -24,6 +24,7 @@ function reverseString(string) {
 }
 
 function isPalindrome(word) {
+  // hint: you can detect palindromes by comparing a string to its reverse
   return (word.toLowerCase() === reverseString(word).toLowerCase());
 }
 
